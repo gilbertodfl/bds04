@@ -23,7 +23,7 @@ public class EventDTO implements Serializable {
 	@NotBlank(message = "Campo requerido")
 	private String name;
 
-	@Future(message = "A data não pode ser passada")
+	@Future(message = "A data do evento não pode ser passada")
 	private LocalDate date;
 
 	// não pediu isto no exercício, embora fosse necessário: @NotBlank(message = "Campo requerido")

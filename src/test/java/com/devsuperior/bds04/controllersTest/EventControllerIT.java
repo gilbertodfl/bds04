@@ -139,7 +139,7 @@ public class EventControllerIT {
 	public void insertShouldReturn422WhenAdminLoggedAndPastDate() throws Exception {
 
 		String accessToken = tokenUtil.obtainAccessToken(mockMvc, adminUsername, adminPassword);
-		LocalDate pastMonth = LocalDate.now().minusMonths(1);
+		LocalDate pastMonth = LocalDate.now().minusMonths(1L);
 		
 		EventDTO dto = new EventDTO(null, "Expo XP", pastMonth, "https://expoxp.com.br", 1L);
 		String jsonBody = objectMapper.writeValueAsString(dto);
