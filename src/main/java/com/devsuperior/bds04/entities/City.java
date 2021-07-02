@@ -3,6 +3,7 @@ package com.devsuperior.bds04.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,8 +18,10 @@ public class City {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
 	
+	@Column(unique = true)
+	private String name;
+		
 	@OneToMany(mappedBy = "city")
 	private List<Event> events = new ArrayList<>();
 	

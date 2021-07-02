@@ -68,6 +68,7 @@ public class EventControllerIT {
 	public void insertShouldInsertResourceWhenClientLoggedAndCorrectData() throws Exception {
 
 		String accessToken = tokenUtil.obtainAccessToken(mockMvc, clientUsername, clientPassword);
+		// Joga um mes para frente: futuro
 		LocalDate nextMonth = LocalDate.now().plusMonths(1L);
 		
 		EventDTO dto = new EventDTO(null, "Expo XP", nextMonth, "https://expoxp.com.br", 1L);
@@ -92,6 +93,7 @@ public class EventControllerIT {
 	public void insertShouldInsertResourceWhenAdminLoggedAndCorrectData() throws Exception {
 
 		String accessToken = tokenUtil.obtainAccessToken(mockMvc, adminUsername, adminPassword);
+		// Um mes para frente: 
 		LocalDate nextMonth = LocalDate.now().plusMonths(1L);
 		
 		EventDTO dto = new EventDTO(null, "Expo XP", nextMonth, "https://expoxp.com.br", 1L);
@@ -137,7 +139,7 @@ public class EventControllerIT {
 	public void insertShouldReturn422WhenAdminLoggedAndPastDate() throws Exception {
 
 		String accessToken = tokenUtil.obtainAccessToken(mockMvc, adminUsername, adminPassword);
-		LocalDate pastMonth = LocalDate.now().minusMonths(1L);
+		LocalDate pastMonth = LocalDate.now().minusMonths(1);
 		
 		EventDTO dto = new EventDTO(null, "Expo XP", pastMonth, "https://expoxp.com.br", 1L);
 		String jsonBody = objectMapper.writeValueAsString(dto);

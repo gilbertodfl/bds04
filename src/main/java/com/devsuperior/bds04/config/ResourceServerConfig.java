@@ -27,10 +27,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	private static final String[] ADMIN = { "/users/**" };	
 */	
 	private static final String[] PUBLIC = { "/oauth/token", "/h2-console/**" };
+	private static final String[] GETS_PUBLIC = {  "/events/**", "/cities/**" };
+	private static final String[] POST_LOG = {  "/events/**" };
 	
-	private static final String[] OPERATOR_OR_ADMIN = { "/cities/**", "/events/**" };
-	
-	private static final String[] ADMIN = { "/users/**" };
+	private static final String[] ADMIN = { "/users/**" ,"/cities/**"};
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
 		resources.tokenStore(tokenStore);
@@ -43,23 +43,23 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
 			http.headers().frameOptions().disable();
 		}
+		
+		http.authorizeRequests()
+		.antMatchers(PUBLIC).permitAll()
+//		.antMatchers(HttpMethod.POST, POST_LOG).permitAll()
+		.antMatchers(HttpMethod.GET, GETS_PUBLIC).permitAll()
+		.antMatchers(POST_LOG).hasAnyRole("CLIENT", "ADMIN")
+		.antMatchers(ADMIN).hasRole("ADMIN")
+		.anyRequest().authenticated();
 /*		
 		http.authorizeRequests()
 		.antMatchers(PUBLIC).permitAll()
 		.antMatchers(HttpMethod.GET, PUBLIC).permitAll()
 		.antMatchers(HttpMethod.POST, PUBLIC).permitAll()
 		.antMatchers(HttpMethod.GET, OPERATOR_OR_ADMIN).permitAll()
-		.antMatchers(OPERATOR_OR_ADMIN).hasAnyRole("OPERATOR", "ADMIN")
-		.antMatchers(ADMIN).hasRole("ADMIN")
-		.anyRequest().authenticated();
-*/		
-		
-		  http.authorizeRequests()
-		.antMatchers(PUBLIC).permitAll()
-		.antMatchers(HttpMethod.GET, OPERATOR_OR_ADMIN).permitAll()
 		.antMatchers(OPERATOR_OR_ADMIN).hasAnyRole("CLIENT", "ADMIN")
 		.antMatchers(ADMIN).hasRole("ADMIN")
 		.anyRequest().authenticated();
-		 
+	*/	 
 	}	
 }

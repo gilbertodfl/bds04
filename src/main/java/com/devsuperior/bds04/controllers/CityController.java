@@ -3,6 +3,8 @@ package com.devsuperior.bds04.controllers;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -50,7 +52,8 @@ public class CityController {
 		}
 		
 		@PostMapping
-		public ResponseEntity<CityDTO> insert(@RequestBody CityDTO dto) {
+		public ResponseEntity<CityDTO> insert(@Valid @RequestBody CityDTO dto) {
+			// o parametro @Valid é o que ativa as validações. Sem ele nada do que foi construído será executado. 
 			dto = service.insert(dto);
 			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 					.buildAndExpand(dto.getId()).toUri();
@@ -58,7 +61,7 @@ public class CityController {
 		}
 
 		@PutMapping(value = "/{id}")
-		public ResponseEntity<CityDTO> update(@PathVariable Long id, @RequestBody CityDTO dto) {
+		public ResponseEntity<CityDTO> update(@Valid @PathVariable Long id, @RequestBody CityDTO dto) {
 			dto = service.update(id, dto);
 			return ResponseEntity.ok().body(dto);
 		}
